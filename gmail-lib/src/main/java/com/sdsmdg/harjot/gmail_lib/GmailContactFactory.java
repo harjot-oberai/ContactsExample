@@ -66,4 +66,7 @@ public class GmailContactFactory {
         this.contactsFetchListener = contactsFetchListener;
     }
 
+    public GmailContactsFetchListener getContactsFetchListener() {
+        return contactsFetchListener;
+    }
 }

@@ -1,6 +1,7 @@
 package com.sdsmdg.harjot.contacts_lib;
 
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,13 +31,19 @@ class GetContactsRunnable implements Runnable {
 
     @Override
     public void run() {
-        List<PhoneContact> phoneContactList = new ArrayList<>();
+        final List<PhoneContact> phoneContactList = new ArrayList<>();
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, null);
 
-        if (phoneContactsFetchListener != null)
-            phoneContactsFetchListener.onFetchStart();
+        if (phoneContactsFetchListener != null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    phoneContactsFetchListener.onFetchStart();
+                }
+            });
+        }
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -63,8 +70,13 @@ class GetContactsRunnable implements Runnable {
             cursor.close();
         }
 
-        if (phoneContactsFetchListener != null)
-            phoneContactsFetchListener.onFetchComplete(phoneContactList);
-
+        if (phoneContactsFetchListener != null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    phoneContactsFetchListener.onFetchComplete(phoneContactList);
+                }
+            });
+        }
     }
 }

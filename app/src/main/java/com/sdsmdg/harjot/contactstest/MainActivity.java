@@ -1,5 +1,6 @@
 package com.sdsmdg.harjot.contactstest;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,14 +27,27 @@ public class MainActivity extends AppCompatActivity {
     PhoneContactsFactory phoneContactsFactory;
     Button gmailButton, contactsButton, allGuestsButton;
 
+    List<String> gmailContacts;
+    List<String> selectedGmailContacts;
+
+    List<PhoneContact> phoneContacts;
+    List<PhoneContact> selectedPhoneContacts;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressDialog = new ProgressDialog(this);
+
         gmailButton = findViewById(R.id.gmail_button);
         contactsButton = findViewById(R.id.contacts_button);
         allGuestsButton = findViewById(R.id.all_guests_button);
+
+        gmailContactFactory = new GmailContactFactory(this);
+        phoneContactsFactory = new PhoneContactsFactory(this);
 
         gmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,40 +93,52 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGmailContactsActivity() {
         // Handle Gmail Contacts request
-        gmailContactFactory = new GmailContactFactory(this);
-        gmailContactFactory.authorizeAndFetch();
-        gmailContactFactory.addListener(new GmailContactsFetchListener() {
-            @Override
-            public void onFetchStart() {
-                // Start Progress Dialog
-            }
+        if (gmailContactFactory.getContactsFetchListener() == null) {
+            gmailContactFactory.addListener(new GmailContactsFetchListener() {
+                @Override
+                public void onFetchStart() {
+                    // Start Progress Dialog
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage(getString(R.string.gmail_contacts_progress_dialog_text));
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.show();
+                }
 
-            @Override
-            public void onContactsFetchComplete(List<String> emails) {
-                // Hide Progress Dialog
-                // Show Recycler
-                Log.d("COUNT", emails.size() + " : emails");
-            }
-        });
+                @Override
+                public void onContactsFetchComplete(List<String> emails) {
+                    // Hide Progress Dialog
+                    // Show Recycler
+                    progressDialog.hide();
+                    Log.d("COUNT", emails.size() + " : emails");
+                }
+            });
+        }
+        gmailContactFactory.authorizeAndFetch();
     }
 
     public void startPhoneContactsActivity() {
         // Handle Phone Contacts request
-        phoneContactsFactory = new PhoneContactsFactory(this);
-        phoneContactsFactory.requestPermissionAndFetch();
-        phoneContactsFactory.addListener(new PhoneContactsFetchListener() {
-            @Override
-            public void onFetchStart() {
-                // Start Progress Dialog
-            }
+        if (phoneContactsFactory.getPhoneContactsFetchListener() == null) {
+            phoneContactsFactory.addListener(new PhoneContactsFetchListener() {
+                @Override
+                public void onFetchStart() {
+                    // Start Progress Dialog
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage(getString(R.string.phone_contacts_progress_dialog_text));
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.show();
+                }
 
-            @Override
-            public void onFetchComplete(List<PhoneContact> phoneContactList) {
-                // Hide Progress Dialog
-                // Show Recycler
-                Log.d("COUNT", phoneContactList.size() + " : phone contacts");
-            }
-        });
+                @Override
+                public void onFetchComplete(List<PhoneContact> phoneContactList) {
+                    // Hide Progress Dialog
+                    // Show Recycler
+                    progressDialog.hide();
+                    Log.d("COUNT", phoneContactList.size() + " : phone contacts");
+                }
+            });
+        }
+        phoneContactsFactory.requestPermissionAndFetch();
     }
 
     public void startAllGuestsActivity() {

@@ -51,4 +51,7 @@ public class PhoneContactsFactory {
         this.phoneContactsFetchListener = phoneContactsFetchListener;
     }
 
+    public PhoneContactsFetchListener getPhoneContactsFetchListener() {
+        return phoneContactsFetchListener;
+    }
 }

@@ -40,8 +40,14 @@ class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Person>> {
 
     @Override
     protected List<Person> doInBackground(Void... params) {
-        if (contactsFetchListener != null)
-            contactsFetchListener.onFetchStart();
+        if (contactsFetchListener != null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    contactsFetchListener.onFetchStart();
+                }
+            });
+        }
 
         List<Person> result = null;
         try {
@@ -74,9 +80,15 @@ class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Person>> {
     }
 
     @Override
-    protected void onPostExecute(List<Person> connections) {
-        if (contactsFetchListener != null)
-            contactsFetchListener.onContactsFetchComplete(processApiResponse(connections));
+    protected void onPostExecute(final List<Person> connections) {
+        if (contactsFetchListener != null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    contactsFetchListener.onContactsFetchComplete(processApiResponse(connections));
+                }
+            });
+        }
     }
 
     private List<String> processApiResponse(List<Person> persons) {

@@ -5,4 +5,7 @@
     <string name="contacts_button_text">CONTACTS</string>
     <string name="guests_button_text">ALL GUESTS</string>
 
+    <string name="gmail_contacts_progress_dialog_text">Fetching Google Contacts</string>
+    <string name="phone_contacts_progress_dialog_text">Fetching Phone Contacts</string>
+
 </resources>
