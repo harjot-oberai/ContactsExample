@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ContactsTest</string>
+
+    <string name="gmail_button_text">GMAIL</string>
+    <string name="contacts_button_text">CONTACTS</string>
+    <string name="invitees_button_text">ALL INVITEES</string>
+
 </resources>

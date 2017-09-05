@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorButtonBackgroundPressed">
+    <item>
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+            <item
+                android:drawable="@drawable/button_unfocused"
+                android:state_focused="false"
+                android:state_pressed="false"
+                android:state_selected="false" />
+            <item
+                android:drawable="@drawable/button_unfocused"
+                android:state_focused="false"
+                android:state_pressed="false"
+                android:state_selected="true" />
+
+            <item
+                android:drawable="@drawable/button_focus"
+                android:state_focused="true"
+                android:state_pressed="false"
+                android:state_selected="false" />
+            <item
+                android:drawable="@drawable/button_focus"
+                android:state_focused="true"
+                android:state_pressed="false"
+                android:state_selected="true" />
+
+            <item
+                android:drawable="@drawable/button_press"
+                android:state_pressed="true" />
+        </selector>
+    </item>
+</ripple>
