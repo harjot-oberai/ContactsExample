@@ -3,6 +3,6 @@
 
     <string name="gmail_button_text">GMAIL</string>
     <string name="contacts_button_text">CONTACTS</string>
-    <string name="invitees_button_text">ALL INVITEES</string>
+    <string name="guests_button_text">ALL GUESTS</string>
 
 </resources>
