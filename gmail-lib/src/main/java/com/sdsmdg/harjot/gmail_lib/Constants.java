@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.gmail_lib.Constants;
+package com.sdsmdg.harjot.gmail_lib;
 
 
 public class Constants {

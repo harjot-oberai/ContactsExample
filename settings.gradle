@@ -1,1 +1,1 @@
-include ':app', ':gmail-lib'
+include ':app', ':gmail-lib', ':contacts-lib'

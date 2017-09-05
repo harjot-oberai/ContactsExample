@@ -1,6 +1,5 @@
 package com.sdsmdg.harjot.gmail_lib;
 
-
 import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
@@ -17,37 +16,38 @@ import com.google.api.services.people.v1.People;
 import com.google.api.services.people.v1.model.EmailAddress;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
-import com.sdsmdg.harjot.gmail_lib.Constants.Constants;
-import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchCompletionListener;
+import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Person>> {
+class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Person>> {
 
     private static HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    private Context mContext;
-    private Account mAccount;
-    private GmailContactsFetchCompletionListener mContactsFetchCompletionListener;
+    private Context context;
+    private Account account;
+    private GmailContactsFetchListener contactsFetchListener;
 
-    public GetContactsAsyncTask(Context context, Account account, GmailContactsFetchCompletionListener contactsFetchCompletionListener) {
-        mContext = context;
-        mAccount = account;
-        mContactsFetchCompletionListener = contactsFetchCompletionListener;
+    GetContactsAsyncTask(Context context, Account account, GmailContactsFetchListener contactsFetchListener) {
+        this.context = context;
+        this.account = account;
+        this.contactsFetchListener = contactsFetchListener;
     }
 
     @Override
     protected List<Person> doInBackground(Void... params) {
-        mContactsFetchCompletionListener.onFetchStart();
+        if (contactsFetchListener != null)
+            contactsFetchListener.onFetchStart();
+
         List<Person> result = null;
         try {
             GoogleAccountCredential credential =
-                    GoogleAccountCredential.usingOAuth2(mContext, Collections.singleton("https://www.googleapis.com/auth/contacts.readonly"));
-            credential.setSelectedAccount(mAccount);
+                    GoogleAccountCredential.usingOAuth2(context, Collections.singleton("https://www.googleapis.com/auth/contacts.readonly"));
+            credential.setSelectedAccount(account);
             People service = new People.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                     .setApplicationName("REST API sample")
                     .build();
@@ -60,9 +60,8 @@ public class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Per
                     .execute();
             result = connectionsResponse.getConnections();
         } catch (UserRecoverableAuthIOException userRecoverableException) {
-            ((Activity) mContext).startActivityForResult(userRecoverableException.getIntent(), Constants.RC_REAUTHORIZE);
+            ((Activity) context).startActivityForResult(userRecoverableException.getIntent(), Constants.RC_REAUTHORIZE);
         } catch (IOException e) {
-            // Handle Exception
             Log.e("FETCH", e.getMessage() + ":");
         }
 
@@ -76,10 +75,11 @@ public class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Per
 
     @Override
     protected void onPostExecute(List<Person> connections) {
-        mContactsFetchCompletionListener.onContactsFetchComplete(processApiResponse(connections));
+        if (contactsFetchListener != null)
+            contactsFetchListener.onContactsFetchComplete(processApiResponse(connections));
     }
 
-    public List<String> processApiResponse(List<Person> persons) {
+    private List<String> processApiResponse(List<Person> persons) {
         List<String> result = new ArrayList<>();
         for (Person p : persons) {
             if (p.getEmailAddresses() != null) {

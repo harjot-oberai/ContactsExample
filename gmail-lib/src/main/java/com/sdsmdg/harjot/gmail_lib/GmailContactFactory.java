@@ -12,23 +12,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
-import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchCompletionListener;
+import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import static android.app.Activity.RESULT_OK;
-import static com.sdsmdg.harjot.gmail_lib.Constants.Constants.RC_AUTHORIZE_CONTACTS;
-import static com.sdsmdg.harjot.gmail_lib.Constants.Constants.RC_REAUTHORIZE;
+import static com.sdsmdg.harjot.gmail_lib.Constants.RC_AUTHORIZE_CONTACTS;
+import static com.sdsmdg.harjot.gmail_lib.Constants.RC_REAUTHORIZE;
 
 public class GmailContactFactory {
 
     private Context context;
     private Account mAuthorizedAccount;
-    private GmailContactsFetchCompletionListener contactsFetchCompletionListener;
+    private GmailContactsFetchListener contactsFetchListener;
 
     public GmailContactFactory(Context context) {
         this.context = context;
     }
 
-    public void authorize() {
+    public void authorizeAndFetch() {
         GoogleSignInOptions gso =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestEmail()
@@ -51,17 +51,19 @@ public class GmailContactFactory {
                 getContacts(mAuthorizedAccount);
             }
         } else if (requestCode == RC_REAUTHORIZE) {
-            getContacts(mAuthorizedAccount);
+            if (resultCode == RESULT_OK) {
+                getContacts(mAuthorizedAccount);
+            }
         }
     }
 
     private void getContacts(Account account) {
-        GetContactsAsyncTask getContactsAsyncTask = new GetContactsAsyncTask(context, account, contactsFetchCompletionListener);
+        GetContactsAsyncTask getContactsAsyncTask = new GetContactsAsyncTask(context, account, contactsFetchListener);
         getContactsAsyncTask.execute();
     }
 
-    public void addListener(GmailContactsFetchCompletionListener contactsFetchCompletionListener) {
-        this.contactsFetchCompletionListener = contactsFetchCompletionListener;
+    public void addListener(GmailContactsFetchListener contactsFetchListener) {
+        this.contactsFetchListener = contactsFetchListener;
     }
 
 }
