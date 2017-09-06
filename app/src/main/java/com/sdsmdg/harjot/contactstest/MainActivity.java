@@ -98,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Collections.sort(selectedPhoneContacts, new Comparator<PhoneContact>() {
+            public int compare(PhoneContact s1, PhoneContact s2) {
+                return s1.getName().toLowerCase().compareTo(s2.getName().toLowerCase());
+            }
+        });
+        Collections.sort(selectedGmailContacts, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return s1.toLowerCase().compareTo(s2.toLowerCase());
+            }
+        });
+    }
+
     public void startGmailContactsActivity() {
 
         // If already fetched, just start the activity
@@ -186,13 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAllGuestsActivity() {
         // Handle All Guests request
-        Log.d("SELECTIONS", selectedGmailContacts.size() + ":" + selectedPhoneContacts.size());
-        for (String email : selectedGmailContacts) {
-            Log.d("SELECTION", email);
-        }
-        for (PhoneContact phoneContact : selectedPhoneContacts) {
-            Log.d("SELECTION", phoneContact.getName());
-        }
+        Intent intent = new Intent(MainActivity.this, AllInvitees.class);
+        startActivity(intent);
     }
-
 }

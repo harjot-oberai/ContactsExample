@@ -62,11 +62,6 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((GmailContactViewHolder) holder).alphabetHeader.setText(String.valueOf(email.toUpperCase().charAt(0)));
             ((GmailContactViewHolder) holder).selectionCheckbox.setText(email);
 
-            if (MainActivity.selectedGmailContacts.contains(email)) {
-                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
-            } else {
-                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(false);
-            }
             ((GmailContactViewHolder) holder).selectionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -85,6 +80,14 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 }
             });
+            if (MainActivity.selectedGmailContacts.contains(email)) {
+                ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
+            } else {
+                ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(false);
+            }
+
         } else if (phoneList != null) {
             final PhoneContact phoneContact = phoneList.get(position);
 
@@ -96,11 +99,6 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //            }
             ((PhoneContactViewHolder) holder).phoneNumberText.setText(phoneNumbers);
 
-            if (MainActivity.selectedPhoneContacts.contains(phoneContact)) {
-                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
-            } else {
-                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
-            }
             ((PhoneContactViewHolder) holder).selectionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -119,6 +117,14 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 }
             });
+
+            if (MainActivity.selectedPhoneContacts.contains(phoneContact)) {
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
+            } else {
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
+            }
         }
     }
 
@@ -166,12 +172,14 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(itemView);
             itemView.setOnClickListener(this);
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
-            selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);selectionCheckbox.setClickable(false);
+            selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
+            selectionCheckbox.setClickable(false);
         }
 
         @Override
         public void onClick(View view) {
             boolean isChecked = selectionCheckbox.isChecked();
+            selectionCheckbox.setTag(null);
             selectionCheckbox.setChecked(!isChecked);
         }
     }
@@ -194,6 +202,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void onClick(View view) {
             boolean isChecked = selectionCheckbox.isChecked();
+            selectionCheckbox.setTag(null);
             selectionCheckbox.setChecked(!isChecked);
         }
     }
