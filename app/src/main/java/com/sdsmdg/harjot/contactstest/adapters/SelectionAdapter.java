@@ -55,11 +55,11 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (gmailList != null) {
             String email = gmailList.get(position);
-//            ((GmailContactViewHolder) holder).alphabetHeader.setText(email.toUpperCase().charAt(0));
+            ((GmailContactViewHolder) holder).alphabetHeader.setText(String.valueOf(email.toUpperCase().charAt(0)));
             ((GmailContactViewHolder) holder).selectionCheckbox.setText(email);
         } else if (phoneList != null) {
             PhoneContact phoneContact = phoneList.get(position);
-//            ((PhoneContactViewHolder) holder).alphabetHeader.setText(phoneContact.getName().toUpperCase().charAt(0));
+            ((PhoneContactViewHolder) holder).alphabetHeader.setText(String.valueOf(phoneContact.getName().toUpperCase().charAt(0)));
             ((PhoneContactViewHolder) holder).nameText.setText(phoneContact.getName());
             String phoneNumbers = phoneContact.getPhoneNumber().get(0);
             for (int i = 1; i < phoneContact.getPhoneNumber().size(); i++) {
@@ -79,13 +79,13 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         } else if (position > 0) {
             if (gmailList != null) {
-                if (gmailList.get(position).charAt(0) != gmailList.get(position - 1).charAt(0)) {
+                if (gmailList.get(position).toLowerCase().charAt(0) != gmailList.get(position - 1).toLowerCase().charAt(0)) {
                     return Constants.VIEW_TYPE_GMAIL_CONTACT_WITH_HEADER;
                 } else {
                     return Constants.VIEW_TYPE_GMAIL_CONTACT;
                 }
             } else if (phoneList != null) {
-                if (phoneList.get(position).getName().charAt(0) != phoneList.get(position - 1).getName().charAt(0)) {
+                if (phoneList.get(position).getName().toLowerCase().charAt(0) != phoneList.get(position - 1).getName().toLowerCase().charAt(0)) {
                     return Constants.VIEW_TYPE_PHONE_CONTACT_WITH_HEADER;
                 } else {
                     return Constants.VIEW_TYPE_PHONE_CONTACT;

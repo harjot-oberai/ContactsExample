@@ -17,6 +17,8 @@ import com.sdsmdg.harjot.gmail_lib.GmailContactFactory;
 import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_AUTHORIZE_CONTACTS;
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_REAUTHORIZE;
@@ -109,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     // Hide Progress Dialog
                     // Show Recycler
                     progressDialog.hide();
+                    Collections.sort(emails, new Comparator<String>() {
+                        public int compare(String s1, String s2) {
+                            return s1.toLowerCase().compareTo(s2.toLowerCase());
+                        }
+                    });
                     gmailContacts = emails;
                     Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
                     intent.putExtra("type", "gmail");
@@ -138,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
                     // Hide Progress Dialog
                     // Show Recycler
                     progressDialog.hide();
+                    Collections.sort(fetchedPhoneContactList, new Comparator<PhoneContact>() {
+                        public int compare(PhoneContact s1, PhoneContact s2) {
+                            return s1.getName().toLowerCase().compareTo(s2.getName().toLowerCase());
+                        }
+                    });
                     phoneContacts = fetchedPhoneContactList;
                     Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
                     intent.putExtra("type", "phone");
