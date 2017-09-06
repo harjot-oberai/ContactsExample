@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.Constants;
+import com.sdsmdg.harjot.contactstest.MainActivity;
 import com.sdsmdg.harjot.contactstest.R;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private ArrayList<String> gmailList;
     private ArrayList<PhoneContact> phoneList;
+
+    private static final String DONT_CALL_LISTENER = "dont_call_listener";
 
     public SelectionAdapter(Context context, ArrayList<String> gmailList, ArrayList<PhoneContact> phoneList) {
         this.context = context;
@@ -52,20 +56,69 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (gmailList != null) {
-            String email = gmailList.get(position);
+            final String email = gmailList.get(position);
             ((GmailContactViewHolder) holder).alphabetHeader.setText(String.valueOf(email.toUpperCase().charAt(0)));
             ((GmailContactViewHolder) holder).selectionCheckbox.setText(email);
+
+            if (MainActivity.selectedGmailContacts.contains(email)) {
+                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
+            } else {
+                ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(false);
+            }
+            ((GmailContactViewHolder) holder).selectionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (((GmailContactViewHolder) holder).selectionCheckbox.getTag() != null) {
+                        ((GmailContactViewHolder) holder).selectionCheckbox.setTag(null);
+                        return;
+                    }
+                    if (b) {
+                        MainActivity.selectedGmailContacts.add(email);
+                        ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                        ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
+                    } else {
+                        MainActivity.selectedGmailContacts.remove(email);
+                        ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                        ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(false);
+                    }
+                }
+            });
         } else if (phoneList != null) {
-            PhoneContact phoneContact = phoneList.get(position);
+            final PhoneContact phoneContact = phoneList.get(position);
+
             ((PhoneContactViewHolder) holder).alphabetHeader.setText(String.valueOf(phoneContact.getName().toUpperCase().charAt(0)));
             ((PhoneContactViewHolder) holder).nameText.setText(phoneContact.getName());
             String phoneNumbers = phoneContact.getPhoneNumber().get(0);
-            for (int i = 1; i < phoneContact.getPhoneNumber().size(); i++) {
-                phoneNumbers += "\n" + phoneContact.getPhoneNumber().get(i);
-            }
+//            for (int i = 1; i < phoneContact.getPhoneNumber().size(); i++) {
+//                phoneNumbers += "\n" + phoneContact.getPhoneNumber().get(i);
+//            }
             ((PhoneContactViewHolder) holder).phoneNumberText.setText(phoneNumbers);
+
+            if (MainActivity.selectedPhoneContacts.contains(phoneContact)) {
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
+            } else {
+                ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
+            }
+            ((PhoneContactViewHolder) holder).selectionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (((PhoneContactViewHolder) holder).selectionCheckbox.getTag() != null) {
+                        ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(null);
+                        return;
+                    }
+                    if (b) {
+                        MainActivity.selectedPhoneContacts.add(phoneContact);
+                        ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                        ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
+                    } else {
+                        MainActivity.selectedPhoneContacts.remove(phoneContact);
+                        ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
+                        ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
+                    }
+                }
+            });
         }
     }
 
@@ -104,29 +157,43 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    private class GmailContactViewHolder extends RecyclerView.ViewHolder {
+    private class GmailContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView alphabetHeader;
         CheckBox selectionCheckbox;
 
         GmailContactViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
             selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
         }
+
+        @Override
+        public void onClick(View view) {
+            boolean isChecked = selectionCheckbox.isChecked();
+            selectionCheckbox.setChecked(!isChecked);
+        }
     }
 
-    private class PhoneContactViewHolder extends RecyclerView.ViewHolder {
+    private class PhoneContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView alphabetHeader, nameText, phoneNumberText;
         CheckBox selectionCheckbox;
 
         PhoneContactViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
             nameText = itemView.findViewById(R.id.phone_contact_text);
             phoneNumberText = itemView.findViewById(R.id.phone_contact_number);
             selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
+        }
+
+        @Override
+        public void onClick(View view) {
+            boolean isChecked = selectionCheckbox.isChecked();
+            selectionCheckbox.setChecked(!isChecked);
         }
     }
 

@@ -29,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
     PhoneContactsFactory phoneContactsFactory;
     Button gmailButton, contactsButton, allGuestsButton;
 
-    static ArrayList<String> gmailContacts;
-    static ArrayList<String> selectedGmailContacts;
+    public static ArrayList<String> gmailContacts;
+    public static ArrayList<String> selectedGmailContacts;
 
-    static ArrayList<PhoneContact> phoneContacts;
-    static ArrayList<PhoneContact> selectedPhoneContacts;
+    public static ArrayList<PhoneContact> phoneContacts;
+    public static ArrayList<PhoneContact> selectedPhoneContacts;
 
     ProgressDialog progressDialog;
 
@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressDialog = new ProgressDialog(this);
+
+        gmailContacts = new ArrayList<>();
+        selectedGmailContacts = new ArrayList<>();
+        phoneContacts = new ArrayList<>();
+        selectedPhoneContacts = new ArrayList<>();
 
         gmailButton = findViewById(R.id.gmail_button);
         contactsButton = findViewById(R.id.contacts_button);
@@ -94,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGmailContactsActivity() {
+
+        // If already fetched, just start the activity
+        if (gmailContacts.size() > 0) {
+            Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+            intent.putExtra("type", "gmail");
+            startActivity(intent);
+            return;
+        }
+
         // Handle Gmail Contacts request
         if (gmailContactFactory.getContactsFetchListener() == null) {
             gmailContactFactory.addListener(new GmailContactsFetchListener() {
@@ -128,6 +142,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startPhoneContactsActivity() {
+
+        // If already fetched, just start the activity
+        if (phoneContacts.size() > 0) {
+            Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+            intent.putExtra("type", "phone");
+            startActivity(intent);
+            return;
+        }
+
         // Handle Phone Contacts request
         if (phoneContactsFactory.getPhoneContactsFetchListener() == null) {
             phoneContactsFactory.addListener(new PhoneContactsFetchListener() {
@@ -163,6 +186,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAllGuestsActivity() {
         // Handle All Guests request
+        Log.d("SELECTIONS", selectedGmailContacts.size() + ":" + selectedPhoneContacts.size());
+        for (String email : selectedGmailContacts) {
+            Log.d("SELECTION", email);
+        }
+        for (PhoneContact phoneContact : selectedPhoneContacts) {
+            Log.d("SELECTION", phoneContact.getName());
+        }
     }
 
 }
