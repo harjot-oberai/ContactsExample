@@ -166,7 +166,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(itemView);
             itemView.setOnClickListener(this);
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
-            selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
+            selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);selectionCheckbox.setClickable(false);
         }
 
         @Override
@@ -188,6 +188,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             nameText = itemView.findViewById(R.id.phone_contact_text);
             phoneNumberText = itemView.findViewById(R.id.phone_contact_number);
             selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
+            selectionCheckbox.setClickable(false);
         }
 
         @Override
