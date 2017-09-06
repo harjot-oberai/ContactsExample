@@ -8,4 +8,7 @@
     <string name="gmail_contacts_progress_dialog_text">Fetching Google Contacts</string>
     <string name="phone_contacts_progress_dialog_text">Fetching Phone Contacts</string>
 
+    <string name="email_selection_toolbar_title">Select Emails</string>
+    <string name="phone_contact_selection_toolbar_title">Select Contacts</string>
+
 </resources>

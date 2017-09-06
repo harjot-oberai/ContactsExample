@@ -10,7 +10,6 @@ import com.sdsmdg.harjot.contacts_lib.interfaces.PhoneContactsFetchListener;
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.sdsmdg.harjot.contacts_lib.Constants.CONTENT_URI;
 import static com.sdsmdg.harjot.contacts_lib.Constants.DISPLAY_NAME;
@@ -31,7 +30,7 @@ class GetContactsRunnable implements Runnable {
 
     @Override
     public void run() {
-        final List<PhoneContact> phoneContactList = new ArrayList<>();
+        final ArrayList<PhoneContact> phoneContactList = new ArrayList<>();
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, null);

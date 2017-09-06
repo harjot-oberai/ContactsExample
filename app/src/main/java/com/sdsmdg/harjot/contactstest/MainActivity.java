@@ -16,7 +16,7 @@ import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.gmail_lib.GmailContactFactory;
 import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_AUTHORIZE_CONTACTS;
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_REAUTHORIZE;
@@ -27,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
     PhoneContactsFactory phoneContactsFactory;
     Button gmailButton, contactsButton, allGuestsButton;
 
-    List<String> gmailContacts;
-    List<String> selectedGmailContacts;
+    static ArrayList<String> gmailContacts;
+    static ArrayList<String> selectedGmailContacts;
 
-    List<PhoneContact> phoneContacts;
-    List<PhoneContact> selectedPhoneContacts;
+    static ArrayList<PhoneContact> phoneContacts;
+    static ArrayList<PhoneContact> selectedPhoneContacts;
 
     ProgressDialog progressDialog;
 
@@ -105,10 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onContactsFetchComplete(List<String> emails) {
+                public void onContactsFetchComplete(ArrayList<String> emails) {
                     // Hide Progress Dialog
                     // Show Recycler
                     progressDialog.hide();
+                    gmailContacts = emails;
+                    Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+                    intent.putExtra("type", "gmail");
+                    startActivity(intent);
                     Log.d("COUNT", emails.size() + " : emails");
                 }
             });
@@ -130,11 +134,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFetchComplete(List<PhoneContact> phoneContactList) {
+                public void onFetchComplete(ArrayList<PhoneContact> fetchedPhoneContactList) {
                     // Hide Progress Dialog
                     // Show Recycler
                     progressDialog.hide();
-                    Log.d("COUNT", phoneContactList.size() + " : phone contacts");
+                    phoneContacts = fetchedPhoneContactList;
+                    Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+                    intent.putExtra("type", "phone");
+                    startActivity(intent);
+                    Log.d("COUNT", fetchedPhoneContactList.size() + " : phone contacts");
                 }
             });
         }

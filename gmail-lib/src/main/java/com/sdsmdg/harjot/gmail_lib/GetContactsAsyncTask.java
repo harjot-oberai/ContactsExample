@@ -19,6 +19,7 @@ import com.google.api.services.people.v1.model.Person;
 import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -91,8 +92,8 @@ class GetContactsAsyncTask extends AsyncTask<Void, List<Person>, List<Person>> {
         }
     }
 
-    private List<String> processApiResponse(List<Person> persons) {
-        List<String> result = new ArrayList<>();
+    private ArrayList<String> processApiResponse(List<Person> persons) {
+        ArrayList<String> result = new ArrayList<>();
         for (Person p : persons) {
             if (p.getEmailAddresses() != null) {
                 for (EmailAddress emailAddress : p.getEmailAddresses()) {
