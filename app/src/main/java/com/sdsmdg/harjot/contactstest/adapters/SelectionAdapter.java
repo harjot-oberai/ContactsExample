@@ -69,7 +69,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (gmailList != null) {
             final String email = gmailList.get(position);
             ((GmailContactViewHolder) holder).alphabetHeader.setText(String.valueOf(email.toUpperCase().charAt(0)));
-            ((GmailContactViewHolder) holder).selectionCheckbox.setText(email);
+            ((GmailContactViewHolder) holder).gmailContactText.setText(email);
 
             ((GmailContactViewHolder) holder).selectionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -175,7 +175,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private class GmailContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView alphabetHeader;
+        TextView alphabetHeader, gmailContactText;
         CheckBox selectionCheckbox;
 
         GmailContactViewHolder(View itemView) {
@@ -184,6 +184,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
             selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
             selectionCheckbox.setClickable(false);
+            gmailContactText = itemView.findViewById(R.id.gmail_contact_text);
         }
 
         @Override

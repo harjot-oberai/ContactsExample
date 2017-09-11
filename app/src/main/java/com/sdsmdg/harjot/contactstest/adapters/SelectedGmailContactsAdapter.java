@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.sdsmdg.harjot.contactstest.Constants;
@@ -23,12 +24,12 @@ public class SelectedGmailContactsAdapter extends RecyclerView.Adapter<RecyclerV
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case Constants.VIEW_TYPE_SELECTED_GMAIL_CONTACT: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.selected_gmail_contact_recycler_item, parent, false);
+            case Constants.VIEW_TYPE_GMAIL_CONTACT: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gmail_contact_recycler_item, parent, false);
                 return new EmailViewHolder(view);
             }
-            case Constants.VIEW_TYPE_SELECTED_GMAIL_CONTACT_WITH_HEADER: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.selected_gmail_contact_recycler_item_with_header, parent, false);
+            case Constants.VIEW_TYPE_GMAIL_CONTACT_WITH_HEADER: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gmail_contact_recycler_item_with_header, parent, false);
                 return new EmailViewHolder(view);
             }
         }
@@ -38,18 +39,18 @@ public class SelectedGmailContactsAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((EmailViewHolder) holder).alphabetHeader.setText(String.valueOf(emails.get(position).toUpperCase().charAt(0)));
-        ((EmailViewHolder) holder).emailText.setText(emails.get(position));
+        ((EmailViewHolder) holder).gmailContactText.setText(emails.get(position));
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return Constants.VIEW_TYPE_SELECTED_GMAIL_CONTACT_WITH_HEADER;
+            return Constants.VIEW_TYPE_GMAIL_CONTACT_WITH_HEADER;
         } else if (position > 0) {
             if (emails.get(position).toLowerCase().charAt(0) != emails.get(position - 1).toLowerCase().charAt(0)) {
-                return Constants.VIEW_TYPE_SELECTED_GMAIL_CONTACT_WITH_HEADER;
+                return Constants.VIEW_TYPE_GMAIL_CONTACT_WITH_HEADER;
             } else {
-                return Constants.VIEW_TYPE_SELECTED_GMAIL_CONTACT;
+                return Constants.VIEW_TYPE_GMAIL_CONTACT;
             }
         }
         return super.getItemViewType(position);
@@ -62,12 +63,15 @@ public class SelectedGmailContactsAdapter extends RecyclerView.Adapter<RecyclerV
 
     private class EmailViewHolder extends RecyclerView.ViewHolder {
 
-        TextView alphabetHeader, emailText;
+        TextView alphabetHeader, gmailContactText;
+        CheckBox selectionCheckbox;
 
         EmailViewHolder(View itemView) {
             super(itemView);
             alphabetHeader = itemView.findViewById(R.id.alphabet_header);
-            emailText = itemView.findViewById(R.id.email_text);
+            gmailContactText = itemView.findViewById(R.id.gmail_contact_text);
+            selectionCheckbox = itemView.findViewById(R.id.selection_checkbox);
+            selectionCheckbox.setVisibility(View.GONE);
         }
     }
 

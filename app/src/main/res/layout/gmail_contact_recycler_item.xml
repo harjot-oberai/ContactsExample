@@ -25,13 +25,24 @@
         android:id="@+id/selection_checkbox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="9"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:paddingEnd="5dp"
         android:paddingStart="10dp"
+        android:theme="@style/WhiteCheckBox" />
+
+    <TextView
+        android:id="@+id/gmail_contact_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:gravity="start|center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
         android:text="harjot.oberai@gmail.com"
         android:textColor="@color/colorAccent"
-        android:textSize="15sp"
-        android:theme="@style/WhiteCheckBox" />
+        android:textSize="15sp" />
 
 </LinearLayout>
