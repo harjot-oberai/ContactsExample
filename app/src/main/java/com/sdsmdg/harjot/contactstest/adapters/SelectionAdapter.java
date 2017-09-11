@@ -120,7 +120,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
                     } else {
-                        selectedPhoneContacts.remove(phoneContact);
+                        findAndRemove(selectedPhoneContacts,phoneContact);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
                     }
@@ -229,6 +229,21 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
         return false;
+    }
+
+    public void findAndRemove(ArrayList<PhoneContact> list, PhoneContact contact) {
+        PhoneContact toBeRemoved = null;
+        for (PhoneContact phoneContact : list) {
+            if (contact.getName().equals(phoneContact.getName())) {
+                if (Arrays.deepEquals(contact.getPhoneNumber().toArray(), phoneContact.getPhoneNumber().toArray())) {
+                    toBeRemoved = phoneContact;
+                    break;
+                }
+            }
+        }
+        if (toBeRemoved != null) {
+            list.remove(toBeRemoved);
+        }
     }
 
 }
