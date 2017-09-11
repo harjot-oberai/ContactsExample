@@ -11,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.MainActivity;
 import com.sdsmdg.harjot.contactstest.R;
 import com.sdsmdg.harjot.contactstest.adapters.SelectedPhoneContactsAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +25,7 @@ public class SelectedPhoneContactsFragment extends Fragment {
 
     RecyclerView recyclerView;
     SelectedPhoneContactsAdapter selectedPhoneContactsAdapter;
+    ArrayList<PhoneContact> selectedPhoneContacts;
 
     public SelectedPhoneContactsFragment() {
         // Required empty public constructor
@@ -38,12 +42,19 @@ public class SelectedPhoneContactsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        selectedPhoneContacts = getArguments().getParcelableArrayList("selectedPhoneContacts");
+
+        if(selectedPhoneContacts == null){
+            selectedPhoneContacts = new ArrayList<>();
+        }
+
         recyclerView = view.findViewById(R.id.selected_phone_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        selectedPhoneContactsAdapter = new SelectedPhoneContactsAdapter(MainActivity.selectedPhoneContacts);
+        selectedPhoneContactsAdapter = new SelectedPhoneContactsAdapter(selectedPhoneContacts);
         recyclerView.setAdapter(selectedPhoneContactsAdapter);
     }
 }

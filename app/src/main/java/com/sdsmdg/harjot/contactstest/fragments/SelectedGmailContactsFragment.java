@@ -9,14 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sdsmdg.harjot.contactstest.MainActivity;
 import com.sdsmdg.harjot.contactstest.R;
 import com.sdsmdg.harjot.contactstest.adapters.SelectedGmailContactsAdapter;
+
+import java.util.ArrayList;
 
 public class SelectedGmailContactsFragment extends Fragment {
 
     RecyclerView recyclerView;
     SelectedGmailContactsAdapter selectedGmailContactsAdapter;
+    ArrayList<String> selectedGmailContacts;
+
 
     public SelectedGmailContactsFragment() {
         // Required empty public constructor
@@ -33,12 +36,19 @@ public class SelectedGmailContactsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        selectedGmailContacts = getArguments().getStringArrayList("selectedGmailContacts");
+
+        if (selectedGmailContacts == null) {
+            selectedGmailContacts = new ArrayList<>();
+        }
+
         recyclerView = view.findViewById(R.id.selected_gmail_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        selectedGmailContactsAdapter = new SelectedGmailContactsAdapter(MainActivity.selectedGmailContacts);
+        selectedGmailContactsAdapter = new SelectedGmailContactsAdapter(selectedGmailContacts);
         recyclerView.setAdapter(selectedGmailContactsAdapter);
 
     }

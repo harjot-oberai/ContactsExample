@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.Constants;
-import com.sdsmdg.harjot.contactstest.MainActivity;
 import com.sdsmdg.harjot.contactstest.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -23,12 +23,21 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private ArrayList<String> gmailList;
     private ArrayList<PhoneContact> phoneList;
 
+    private ArrayList<String> selectedGmailContacts;
+    private ArrayList<PhoneContact> selectedPhoneContacts;
+
     private static final String DONT_CALL_LISTENER = "dont_call_listener";
 
-    public SelectionAdapter(Context context, ArrayList<String> gmailList, ArrayList<PhoneContact> phoneList) {
+    public SelectionAdapter(Context context,
+                            ArrayList<String> gmailList,
+                            ArrayList<PhoneContact> phoneList,
+                            ArrayList<String> selectedGmailContacts,
+                            ArrayList<PhoneContact> selectedPhoneContacts) {
         this.context = context;
         this.gmailList = gmailList;
         this.phoneList = phoneList;
+        this.selectedGmailContacts = selectedGmailContacts;
+        this.selectedPhoneContacts = selectedPhoneContacts;
     }
 
     @Override
@@ -70,17 +79,17 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         return;
                     }
                     if (b) {
-                        MainActivity.selectedGmailContacts.add(email);
+                        selectedGmailContacts.add(email);
                         ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
                     } else {
-                        MainActivity.selectedGmailContacts.remove(email);
+                        selectedGmailContacts.remove(email);
                         ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(false);
                     }
                 }
             });
-            if (MainActivity.selectedGmailContacts.contains(email)) {
+            if (selectedGmailContacts.contains(email)) {
                 ((GmailContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                 ((GmailContactViewHolder) holder).selectionCheckbox.setChecked(true);
             } else {
@@ -107,18 +116,18 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         return;
                     }
                     if (b) {
-                        MainActivity.selectedPhoneContacts.add(phoneContact);
+                        selectedPhoneContacts.add(phoneContact);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
                     } else {
-                        MainActivity.selectedPhoneContacts.remove(phoneContact);
+                        selectedPhoneContacts.remove(phoneContact);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
                     }
                 }
             });
 
-            if (MainActivity.selectedPhoneContacts.contains(phoneContact)) {
+            if (isPresent(selectedPhoneContacts, phoneContact)) {
                 ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                 ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
             } else {
@@ -158,9 +167,10 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         if (gmailList != null) {
             return gmailList.size();
-        } else {
+        } else if (phoneList != null) {
             return phoneList.size();
         }
+        return 0;
     }
 
     private class GmailContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -205,6 +215,19 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             selectionCheckbox.setTag(null);
             selectionCheckbox.setChecked(!isChecked);
         }
+    }
+
+    // We will have to compare `contact` with every list item as due to passing
+    // a parcelable list, the object references change.
+    public boolean isPresent(ArrayList<PhoneContact> list, PhoneContact contact) {
+        for (PhoneContact phoneContact : list) {
+            if (contact.getName().equals(phoneContact.getName())) {
+                if (Arrays.deepEquals(contact.getPhoneNumber().toArray(), phoneContact.getPhoneNumber().toArray())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

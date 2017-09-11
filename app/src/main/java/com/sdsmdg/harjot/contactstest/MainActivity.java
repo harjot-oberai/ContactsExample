@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static com.sdsmdg.harjot.contactstest.Constants.SELECTION_ACTIVITY_REQUEST_CODE;
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_AUTHORIZE_CONTACTS;
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_REAUTHORIZE;
 
@@ -29,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
     PhoneContactsFactory phoneContactsFactory;
     Button gmailButton, contactsButton, allGuestsButton;
 
-    public static ArrayList<String> gmailContacts;
-    public static ArrayList<String> selectedGmailContacts;
+    ArrayList<String> gmailContacts;
+    ArrayList<String> selectedGmailContacts;
 
-    public static ArrayList<PhoneContact> phoneContacts;
-    public static ArrayList<PhoneContact> selectedPhoneContacts;
+    ArrayList<PhoneContact> phoneContacts;
+    ArrayList<PhoneContact> selectedPhoneContacts;
 
     ProgressDialog progressDialog;
 
@@ -87,6 +88,15 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (requestCode == SELECTION_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("type").equals("gmail")) {
+                    selectedGmailContacts = data.getStringArrayListExtra("selectedGmailContacts");
+                } else if (data.getStringExtra("type").equals("phone")) {
+                    selectedPhoneContacts = data.getParcelableArrayListExtra("selectedPhoneContacts");
+                }
+            }
+        }
     }
 
     @Override
@@ -119,7 +129,9 @@ public class MainActivity extends AppCompatActivity {
         if (gmailContacts.size() > 0) {
             Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
             intent.putExtra("type", "gmail");
-            startActivity(intent);
+            intent.putStringArrayListExtra("gmailContacts", gmailContacts);
+            intent.putStringArrayListExtra("selectedGmailContacts", selectedGmailContacts);
+            startActivityForResult(intent, SELECTION_ACTIVITY_REQUEST_CODE);
             return;
         }
 
@@ -148,7 +160,9 @@ public class MainActivity extends AppCompatActivity {
                     gmailContacts = emails;
                     Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
                     intent.putExtra("type", "gmail");
-                    startActivity(intent);
+                    intent.putStringArrayListExtra("gmailContacts", gmailContacts);
+                    intent.putStringArrayListExtra("selectedGmailContacts", selectedGmailContacts);
+                    startActivityForResult(intent, SELECTION_ACTIVITY_REQUEST_CODE);
                     Log.d("COUNT", emails.size() + " : emails");
                 }
             });
@@ -162,7 +176,9 @@ public class MainActivity extends AppCompatActivity {
         if (phoneContacts.size() > 0) {
             Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
             intent.putExtra("type", "phone");
-            startActivity(intent);
+            intent.putParcelableArrayListExtra("phoneContacts", phoneContacts);
+            intent.putParcelableArrayListExtra("selectedPhoneContacts", selectedPhoneContacts);
+            startActivityForResult(intent, SELECTION_ACTIVITY_REQUEST_CODE);
             return;
         }
 
@@ -191,7 +207,9 @@ public class MainActivity extends AppCompatActivity {
                     phoneContacts = fetchedPhoneContactList;
                     Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
                     intent.putExtra("type", "phone");
-                    startActivity(intent);
+                    intent.putParcelableArrayListExtra("phoneContacts", phoneContacts);
+                    intent.putParcelableArrayListExtra("selectedPhoneContacts", selectedPhoneContacts);
+                    startActivityForResult(intent, SELECTION_ACTIVITY_REQUEST_CODE);
                     Log.d("COUNT", fetchedPhoneContactList.size() + " : phone contacts");
                 }
             });
@@ -202,6 +220,9 @@ public class MainActivity extends AppCompatActivity {
     public void startAllGuestsActivity() {
         // Handle All Guests request
         Intent intent = new Intent(MainActivity.this, AllInvitees.class);
+        intent.putStringArrayListExtra("selectedGmailContacts", selectedGmailContacts);
+        intent.putParcelableArrayListExtra("selectedPhoneContacts", selectedPhoneContacts);
         startActivity(intent);
     }
+
 }

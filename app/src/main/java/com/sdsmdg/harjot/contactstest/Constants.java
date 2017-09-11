@@ -11,5 +11,7 @@ public class Constants {
     public static final int VIEW_TYPE_SELECTED_GMAIL_CONTACT = 41;
     public static final int VIEW_TYPE_SELECTED_GMAIL_CONTACT_WITH_HEADER = 42;
 
+    public static final int SELECTION_ACTIVITY_REQUEST_CODE = 78;
+
 
 }
