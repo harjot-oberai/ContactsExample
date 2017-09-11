@@ -35,28 +35,31 @@ public class SelectionActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.selection_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        type = getIntent().getStringExtra("type");
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getStringExtra("type");
 
-        if (type.equals("gmail")) {
-            setTitle(getString(R.string.email_selection_toolbar_title));
-            gmailContacts = getIntent().getStringArrayListExtra("gmailContacts");
-            selectedGmailContacts = getIntent().getStringArrayListExtra("selectedGmailContacts");
-            selectionAdapter = new SelectionAdapter(this, gmailContacts, null, selectedGmailContacts, null);
-        } else if (type.equals("phone")) {
-            setTitle(getString(R.string.phone_contact_selection_toolbar_title));
-            phoneContacts = getIntent().getParcelableArrayListExtra("phoneContacts");
-            selectedPhoneContacts = getIntent().getParcelableArrayListExtra("selectedPhoneContacts");
-            selectionAdapter = new SelectionAdapter(this, null, phoneContacts, null, selectedPhoneContacts);
+            if (type.equals("gmail")) {
+                setTitle(getString(R.string.email_selection_toolbar_title));
+                gmailContacts = getIntent().getStringArrayListExtra("gmailContacts");
+                selectedGmailContacts = getIntent().getStringArrayListExtra("selectedGmailContacts");
+                selectionAdapter = new SelectionAdapter(this, gmailContacts, null, selectedGmailContacts, null);
+            } else if (type.equals("phone")) {
+                setTitle(getString(R.string.phone_contact_selection_toolbar_title));
+                phoneContacts = getIntent().getParcelableArrayListExtra("phoneContacts");
+                selectedPhoneContacts = getIntent().getParcelableArrayListExtra("selectedPhoneContacts");
+                selectionAdapter = new SelectionAdapter(this, null, phoneContacts, null, selectedPhoneContacts);
+            }
+
+            recyclerView.setAdapter(selectionAdapter);
         }
-
-        recyclerView.setAdapter(selectionAdapter);
 
     }
 

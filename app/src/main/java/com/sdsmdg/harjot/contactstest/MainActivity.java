@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (requestCode == SELECTION_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK && data != null) {
+            if (resultCode == RESULT_OK && data != null && data.hasExtra("type")) {
                 if (data.getStringExtra("type").equals("gmail")) {
                     selectedGmailContacts = data.getStringArrayListExtra("selectedGmailContacts");
                 } else if (data.getStringExtra("type").equals("phone")) {
@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Constants.READ_CONTACTS_PERMISSION_REQUEST_CODE) {
             phoneContactsFactory.handleRequestPermissions(permissions, grantResults);
-            return;
         }
     }
 

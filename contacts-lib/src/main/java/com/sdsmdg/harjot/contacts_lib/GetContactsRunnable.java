@@ -44,7 +44,7 @@ class GetContactsRunnable implements Runnable {
             });
         }
 
-        if (cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String contact_id = cursor.getString(cursor.getColumnIndex(Constants._ID));
                 String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
@@ -56,14 +56,18 @@ class GetContactsRunnable implements Runnable {
 
                     Cursor phoneCursor = contentResolver.query(PHONE_CONTENT_URI, null, PHONE_CONTACT_ID + " = ?", new String[]{contact_id}, null);
                     ArrayList<String> phoneNumbers = new ArrayList<>();
-                    while (phoneCursor.moveToNext()) {
-                        String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(PHONE_NUMBER));
-                        phoneNumbers.add(phoneNumber);
+                    if (phoneCursor != null) {
+                        while (phoneCursor.moveToNext()) {
+                            String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(PHONE_NUMBER));
+                            phoneNumbers.add(phoneNumber);
+                        }
                     }
                     phoneContact.setPhoneNumber(phoneNumbers);
                     phoneContactList.add(phoneContact);
 
-                    phoneCursor.close();
+                    if (phoneCursor != null) {
+                        phoneCursor.close();
+                    }
                 }
             }
             cursor.close();

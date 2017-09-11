@@ -47,7 +47,9 @@ public class GmailContactFactory {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
-                mAuthorizedAccount = googleSignInAccount.getAccount();
+                if (googleSignInAccount != null) {
+                    mAuthorizedAccount = googleSignInAccount.getAccount();
+                }
                 getContacts(mAuthorizedAccount);
             }
         } else if (requestCode == RC_REAUTHORIZE) {
@@ -58,6 +60,9 @@ public class GmailContactFactory {
     }
 
     private void getContacts(Account account) {
+        if (account == null) {
+            return;
+        }
         GetContactsAsyncTask getContactsAsyncTask = new GetContactsAsyncTask(context, account, contactsFetchListener);
         getContactsAsyncTask.execute();
     }

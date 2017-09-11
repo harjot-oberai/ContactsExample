@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
-import com.sdsmdg.harjot.contactstest.MainActivity;
 import com.sdsmdg.harjot.contactstest.R;
 import com.sdsmdg.harjot.contactstest.adapters.SelectedPhoneContactsAdapter;
 
@@ -45,7 +44,7 @@ public class SelectedPhoneContactsFragment extends Fragment {
 
         selectedPhoneContacts = getArguments().getParcelableArrayList("selectedPhoneContacts");
 
-        if(selectedPhoneContacts == null){
+        if (selectedPhoneContacts == null) {
             selectedPhoneContacts = new ArrayList<>();
         }
 

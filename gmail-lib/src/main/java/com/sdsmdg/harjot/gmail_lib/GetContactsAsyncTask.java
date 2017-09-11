@@ -19,7 +19,6 @@ import com.google.api.services.people.v1.model.Person;
 import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

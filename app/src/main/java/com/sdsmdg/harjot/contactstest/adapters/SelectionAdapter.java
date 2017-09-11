@@ -120,7 +120,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(true);
                     } else {
-                        findAndRemove(selectedPhoneContacts,phoneContact);
+                        findAndRemove(selectedPhoneContacts, phoneContact);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setTag(DONT_CALL_LISTENER);
                         ((PhoneContactViewHolder) holder).selectionCheckbox.setChecked(false);
                     }
