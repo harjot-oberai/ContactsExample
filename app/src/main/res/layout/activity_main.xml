@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context="com.sdsmdg.harjot.contactstest.MainActivity">
+    tools:context="com.sdsmdg.harjot.contactstest.mainactivity.MainActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/center_horizontal_guideline"
@@ -52,8 +52,8 @@
         android:elevation="10dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
-        android:textSize="12sp"
         android:textColor="@color/colorAccent"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/gmail_button"
         app:layout_constraintEnd_toEndOf="@id/gmail_button"
         app:layout_constraintTop_toTopOf="@id/gmail_button" />
@@ -82,8 +82,8 @@
         android:elevation="10dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
-        android:textSize="12sp"
         android:textColor="@color/colorAccent"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/contacts_button"
         app:layout_constraintEnd_toEndOf="@id/contacts_button"
         app:layout_constraintTop_toTopOf="@id/contacts_button" />
@@ -102,5 +102,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_end_vertical_guideline"
         app:layout_constraintStart_toEndOf="@id/button_start_vertical_guideline" />
+
+    <FrameLayout
+        android:id="@+id/frag_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="12dp" />
 
 </android.support.constraint.ConstraintLayout>

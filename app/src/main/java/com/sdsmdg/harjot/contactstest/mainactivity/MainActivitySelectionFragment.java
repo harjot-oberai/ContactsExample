@@ -1,0 +1,115 @@
+package com.sdsmdg.harjot.contactstest.mainactivity;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
+import com.sdsmdg.harjot.contactstest.R;
+import com.sdsmdg.harjot.contactstest.adapters.SelectionAdapter;
+
+import java.util.ArrayList;
+
+public class MainActivitySelectionFragment extends Fragment implements MainActivitySelectionContract.View {
+
+    private String type;
+
+    private MainActivitySelectionContract.Presenter presenter;
+    private Toolbar toolbar;
+    private RecyclerView selectionRecycler;
+
+    private SelectionAdapter selectionAdapter;
+
+    private ProgressDialog progressDialog;
+
+    private boolean hasStarted = false;
+
+    public static MainActivitySelectionFragment getInstance() {
+        return new MainActivitySelectionFragment();
+    }
+
+    public MainActivitySelectionFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_selection, container, false);
+        toolbar = root.findViewById(R.id.toolbar);
+        selectionRecycler = root.findViewById(R.id.selection_recycler);
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Bundle args = getArguments();
+        type = args.getString("type");
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        selectionRecycler.setLayoutManager(linearLayoutManager);
+        selectionRecycler.setItemAnimator(new DefaultItemAnimator());
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!hasStarted) {
+            presenter.start(type);
+            hasStarted = true;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        hasStarted = false;
+    }
+
+    @Override
+    public void setPresenter(MainActivitySelectionContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showProgressDialog(String type) {
+        progressDialog.setMessage(
+                (type.equals("gmail"))
+                        ? getString(R.string.gmail_contacts_progress_dialog_text)
+                        : getString(R.string.phone_contacts_progress_dialog_text));
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void showEmailsRecycler(ArrayList<String> emails, ArrayList<String> selectedEmails) {
+        selectionAdapter = new SelectionAdapter(getContext(), emails, null, selectedEmails, null);
+        selectionRecycler.setAdapter(selectionAdapter);
+    }
+
+    @Override
+    public void showPhoneContactRecycler(ArrayList<PhoneContact> phoneContacts, ArrayList<PhoneContact> selectedPhoneContacts) {
+        selectionAdapter = new SelectionAdapter(getContext(), null, phoneContacts, null, selectedPhoneContacts);
+        selectionRecycler.setAdapter(selectionAdapter);
+    }
+}

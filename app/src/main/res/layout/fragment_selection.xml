@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context="com.sdsmdg.harjot.contactstest.SelectionActivity">
+    tools:context="com.sdsmdg.harjot.contactstest.selectionactivity.SelectionActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:theme="@style/WhiteBackButton"/>
+        android:theme="@style/WhiteBackButton" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/selection_recycler"
