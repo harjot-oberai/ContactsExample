@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".selectionactivity.SelectionActivity" />
-        <activity android:name=".AllInvitees"></activity>
     </application>
 
 </manifest>

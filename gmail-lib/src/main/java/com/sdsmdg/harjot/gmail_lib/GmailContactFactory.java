@@ -15,6 +15,8 @@ import com.google.android.gms.common.api.Scope;
 import com.sdsmdg.harjot.gmail_lib.interfaces.GmailContactsFetchListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static android.app.Activity.RESULT_OK;
 import static com.sdsmdg.harjot.gmail_lib.Constants.RC_AUTHORIZE_CONTACTS;
@@ -96,6 +98,14 @@ public class GmailContactFactory implements GmailContactsFetchListener {
 
     public boolean isFetched() {
         return isFetched;
+    }
+
+    public void sortSelectedItems(){
+        Collections.sort(selectedEmails, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return s1.toLowerCase().compareTo(s2.toLowerCase());
+            }
+        });
     }
 
     @Override

@@ -67,24 +67,4 @@ public class MainActivitySelectionPresenter implements MainActivitySelectionCont
         });
         view.showPhoneContactRecycler(phoneContactList, phoneContactsFactory.getSelectedPhoneContacts());
     }
-
-    @Override
-    public void selectEmail(String email) {
-
-    }
-
-    @Override
-    public void deselectEmail(String email) {
-
-    }
-
-    @Override
-    public void selectContact(PhoneContact phoneContact) {
-
-    }
-
-    @Override
-    public void deselectContact(PhoneContact phoneContact) {
-
-    }
 }

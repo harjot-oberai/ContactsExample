@@ -14,6 +14,8 @@ import com.sdsmdg.harjot.contacts_lib.interfaces.PhoneContactsFetchListener;
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PhoneContactsFactory implements PhoneContactsFetchListener {
 
@@ -78,6 +80,14 @@ public class PhoneContactsFactory implements PhoneContactsFetchListener {
 
     public PhoneContactsFetchListener getPhoneContactsFetchListener() {
         return phoneContactsFetchListener;
+    }
+
+    public void sortSelectedItems() {
+        Collections.sort(selectedPhoneContacts, new Comparator<PhoneContact>() {
+            public int compare(PhoneContact s1, PhoneContact s2) {
+                return s1.getName().toLowerCase().compareTo(s2.getName().toLowerCase());
+            }
+        });
     }
 
     @Override
