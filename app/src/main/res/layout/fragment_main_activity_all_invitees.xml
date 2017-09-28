@@ -15,8 +15,33 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:theme="@style/WhiteBackButton"
-            android:title="@string/all_invitees_toolbar_title" />
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/back_btn"
+                    android:layout_width="?android:actionBarSize"
+                    android:layout_height="match_parent"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_arrow_back_white" />
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/back_btn"
+                    android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

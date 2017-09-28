@@ -2,13 +2,15 @@ package com.sdsmdg.harjot.contactstest.mainactivity;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
@@ -23,7 +25,8 @@ import java.util.ArrayList;
  */
 public class MainActivityAllInviteesFragment extends Fragment implements MainActivityAllInviteesContract.View {
 
-    private Toolbar toolbar;
+    private TextView title;
+    private ImageView backBtn;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -46,10 +49,23 @@ public class MainActivityAllInviteesFragment extends Fragment implements MainAct
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_main_activity_all_invitees, container, false);
-        toolbar = root.findViewById(R.id.toolbar);
+        title = root.findViewById(R.id.title_text);
+        backBtn = root.findViewById(R.id.back_btn);
         viewPager = root.findViewById(R.id.view_pager);
         tabLayout = root.findViewById(R.id.tabs);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        title.setText(getString(R.string.all_invitees_toolbar_title));
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     @Override

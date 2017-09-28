@@ -7,10 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
@@ -23,7 +24,8 @@ public class MainActivitySelectionFragment extends Fragment implements MainActiv
     private String type;
 
     private MainActivitySelectionContract.Presenter presenter;
-    private Toolbar toolbar;
+    private TextView title;
+    private ImageView backBtn;
     private RecyclerView selectionRecycler;
 
     private SelectionAdapter selectionAdapter;
@@ -45,7 +47,8 @@ public class MainActivitySelectionFragment extends Fragment implements MainActiv
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_selection, container, false);
-        toolbar = root.findViewById(R.id.toolbar);
+        title = root.findViewById(R.id.title_text);
+        backBtn = root.findViewById(R.id.back_btn);
         selectionRecycler = root.findViewById(R.id.selection_recycler);
         return root;
     }
@@ -56,6 +59,19 @@ public class MainActivitySelectionFragment extends Fragment implements MainActiv
 
         Bundle args = getArguments();
         type = args.getString("type");
+
+        if (type != null && type.equals("gmail")) {
+            title.setText(getString(R.string.email_selection_toolbar_title));
+        } else {
+            title.setText(getString(R.string.phone_contact_selection_toolbar_title));
+        }
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
