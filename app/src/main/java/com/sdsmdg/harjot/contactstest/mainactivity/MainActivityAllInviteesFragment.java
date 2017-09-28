@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
 import com.sdsmdg.harjot.contactstest.adapters.ViewPagerAdapter;
-import com.sdsmdg.harjot.contactstest.fragments.SelectedGmailContactsFragment;
-import com.sdsmdg.harjot.contactstest.fragments.SelectedPhoneContactsFragment;
+import com.sdsmdg.harjot.contactstest.viewpagerfragments.SelectedGmailContactsFragment;
+import com.sdsmdg.harjot.contactstest.viewpagerfragments.SelectedPhoneContactsFragment;
 
 import java.util.ArrayList;
 

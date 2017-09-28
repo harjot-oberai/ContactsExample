@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.fragments;
+package com.sdsmdg.harjot.contactstest.viewpagerfragments;
 
 
 import android.os.Bundle;
