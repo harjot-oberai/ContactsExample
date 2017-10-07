@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest.selection;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -15,15 +15,14 @@ import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
-import com.sdsmdg.harjot.contactstest.adapters.SelectionAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivitySelectionFragment extends Fragment implements MainActivitySelectionContract.View {
+public class SelectionFragment extends Fragment implements SelectionContract.View {
 
     private String type;
 
-    private MainActivitySelectionContract.Presenter presenter;
+    private SelectionContract.Presenter presenter;
     private TextView title;
     private ImageView backBtn;
     private RecyclerView selectionRecycler;
@@ -34,11 +33,11 @@ public class MainActivitySelectionFragment extends Fragment implements MainActiv
 
     private boolean hasStarted = false;
 
-    public static MainActivitySelectionFragment getInstance() {
-        return new MainActivitySelectionFragment();
+    public static SelectionFragment getInstance() {
+        return new SelectionFragment();
     }
 
-    public MainActivitySelectionFragment() {
+    public SelectionFragment() {
         // Required empty public constructor
     }
 
@@ -99,7 +98,7 @@ public class MainActivitySelectionFragment extends Fragment implements MainActiv
     }
 
     @Override
-    public void setPresenter(MainActivitySelectionContract.Presenter presenter) {
+    public void setPresenter(SelectionContract.Presenter presenter) {
         this.presenter = presenter;
     }
 

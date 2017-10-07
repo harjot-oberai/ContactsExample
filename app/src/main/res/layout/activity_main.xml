@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context="com.sdsmdg.harjot.contactstest.mainactivity.MainActivity">
+    tools:context="com.sdsmdg.harjot.contactstest.MainActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/center_horizontal_guideline"

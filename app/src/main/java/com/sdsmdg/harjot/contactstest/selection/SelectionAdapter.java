@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.adapters;
+package com.sdsmdg.harjot.contactstest.selection;
 
 
 import android.content.Context;

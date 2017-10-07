@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest.selection;
 
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
@@ -6,9 +6,9 @@ import com.sdsmdg.harjot.contactstest.BaseView;
 
 import java.util.ArrayList;
 
-public interface MainActivitySelectionContract {
+public interface SelectionContract {
 
-    interface View extends BaseView<MainActivitySelectionContract.Presenter> {
+    interface View extends BaseView<SelectionContract.Presenter> {
         void showProgressDialog(String message);
 
         void hideProgressDialog();

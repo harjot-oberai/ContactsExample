@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest.selection;
 
 import com.sdsmdg.harjot.contacts_lib.PhoneContactsFactory;
 import com.sdsmdg.harjot.contacts_lib.interfaces.PhoneContactsFetchListener;
@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class MainActivitySelectionPresenter implements MainActivitySelectionContract.Presenter, PhoneContactsFetchListener, GmailContactsFetchListener {
+public class SelectionPresenter implements SelectionContract.Presenter, PhoneContactsFetchListener, GmailContactsFetchListener {
 
     private String type;
-    private MainActivitySelectionContract.View view;
+    private SelectionContract.View view;
 
     private GmailContactFactory gmailContactFactory;
     private PhoneContactsFactory phoneContactsFactory;
 
-    public MainActivitySelectionPresenter(
-            MainActivitySelectionContract.View view,
+    public SelectionPresenter(
+            SelectionContract.View view,
             GmailContactFactory gmailContactFactory,
             PhoneContactsFactory phoneContactsFactory) {
         this.view = view;

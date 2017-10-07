@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest.allinvitees;
 
 
 import android.os.Bundle;
@@ -14,16 +14,15 @@ import android.widget.TextView;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
-import com.sdsmdg.harjot.contactstest.adapters.ViewPagerAdapter;
-import com.sdsmdg.harjot.contactstest.viewpagerfragments.SelectedGmailContactsFragment;
-import com.sdsmdg.harjot.contactstest.viewpagerfragments.SelectedPhoneContactsFragment;
+import com.sdsmdg.harjot.contactstest.allinvitees.viewpagerfragments.SelectedGmailContactsFragment;
+import com.sdsmdg.harjot.contactstest.allinvitees.viewpagerfragments.SelectedPhoneContactsFragment;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainActivityAllInviteesFragment extends Fragment implements MainActivityAllInviteesContract.View {
+public class AllInviteesFragment extends Fragment implements AllInviteesContract.View {
 
     private TextView title;
     private ImageView backBtn;
@@ -33,13 +32,13 @@ public class MainActivityAllInviteesFragment extends Fragment implements MainAct
     private ArrayList<String> selectedGmailContacts;
     private ArrayList<PhoneContact> selectedPhoneContacts;
 
-    private MainActivityAllInviteesContract.Presenter presenter;
+    private AllInviteesContract.Presenter presenter;
 
-    public static MainActivityAllInviteesFragment getInstance() {
-        return new MainActivityAllInviteesFragment();
+    public static AllInviteesFragment getInstance() {
+        return new AllInviteesFragment();
     }
 
-    public MainActivityAllInviteesFragment() {
+    public AllInviteesFragment() {
         // Required empty public constructor
     }
 
@@ -75,7 +74,7 @@ public class MainActivityAllInviteesFragment extends Fragment implements MainAct
     }
 
     @Override
-    public void setPresenter(MainActivityAllInviteesContract.Presenter presenter) {
+    public void setPresenter(AllInviteesContract.Presenter presenter) {
         this.presenter = presenter;
     }
 

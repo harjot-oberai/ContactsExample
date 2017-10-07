@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.viewpagerfragments;
+package com.sdsmdg.harjot.contactstest.allinvitees.viewpagerfragments;
 
 
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.sdsmdg.harjot.contacts_lib.models.PhoneContact;
 import com.sdsmdg.harjot.contactstest.R;
-import com.sdsmdg.harjot.contactstest.adapters.SelectedPhoneContactsAdapter;
 
 import java.util.ArrayList;
 

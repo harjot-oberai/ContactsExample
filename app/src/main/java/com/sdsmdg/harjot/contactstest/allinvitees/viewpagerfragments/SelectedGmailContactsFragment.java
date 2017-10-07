@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.viewpagerfragments;
+package com.sdsmdg.harjot.contactstest.allinvitees.viewpagerfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sdsmdg.harjot.contactstest.R;
-import com.sdsmdg.harjot.contactstest.adapters.SelectedGmailContactsAdapter;
 
 import java.util.ArrayList;
 

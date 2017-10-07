@@ -1,16 +1,16 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest.allinvitees;
 
 
 import com.sdsmdg.harjot.contacts_lib.PhoneContactsFactory;
 import com.sdsmdg.harjot.gmail_lib.GmailContactFactory;
 
-public class MainActivityAllInviteesPresenter implements MainActivityAllInviteesContract.Presenter {
+public class AllInviteesPresenter implements AllInviteesContract.Presenter {
 
-    private MainActivityAllInviteesContract.View view;
+    private AllInviteesContract.View view;
     private GmailContactFactory gmailContactFactory;
     private PhoneContactsFactory phoneContactsFactory;
 
-    public MainActivityAllInviteesPresenter(MainActivityAllInviteesContract.View view, GmailContactFactory gmailContactFactory, PhoneContactsFactory phoneContactsFactory) {
+    public AllInviteesPresenter(AllInviteesContract.View view, GmailContactFactory gmailContactFactory, PhoneContactsFactory phoneContactsFactory) {
         this.view = view;
         this.gmailContactFactory = gmailContactFactory;
         this.phoneContactsFactory = phoneContactsFactory;

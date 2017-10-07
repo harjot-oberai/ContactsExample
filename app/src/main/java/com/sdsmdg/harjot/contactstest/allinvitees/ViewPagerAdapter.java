@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.adapters;
+package com.sdsmdg.harjot.contactstest.allinvitees;
 
 
 import android.support.v4.app.Fragment;

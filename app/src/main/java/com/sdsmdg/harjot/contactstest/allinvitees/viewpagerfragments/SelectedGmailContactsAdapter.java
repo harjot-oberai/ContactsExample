@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.adapters;
+package com.sdsmdg.harjot.contactstest.allinvitees.viewpagerfragments;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

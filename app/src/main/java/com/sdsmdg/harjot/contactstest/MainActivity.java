@@ -1,4 +1,4 @@
-package com.sdsmdg.harjot.contactstest.mainactivity;
+package com.sdsmdg.harjot.contactstest;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,10 @@ import android.widget.Button;
 
 import com.sdsmdg.harjot.contacts_lib.Constants;
 import com.sdsmdg.harjot.contacts_lib.PhoneContactsFactory;
-import com.sdsmdg.harjot.contactstest.R;
+import com.sdsmdg.harjot.contactstest.allinvitees.AllInviteesFragment;
+import com.sdsmdg.harjot.contactstest.allinvitees.AllInviteesPresenter;
+import com.sdsmdg.harjot.contactstest.selection.SelectionFragment;
+import com.sdsmdg.harjot.contactstest.selection.SelectionPresenter;
 import com.sdsmdg.harjot.gmail_lib.GmailContactFactory;
 
 import static com.sdsmdg.harjot.contactstest.Constants.ALL_INVITEES_FRAGMENT_TAG;
@@ -23,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
     PhoneContactsFactory phoneContactsFactory;
     Button gmailButton, contactsButton, allGuestsButton;
 
-    MainActivitySelectionFragment mainActivitySelectionFragment;
-    MainActivitySelectionPresenter mainActivitySelectionPresenter;
+    SelectionFragment selectionFragment;
+    SelectionPresenter selectionPresenter;
 
-    MainActivityAllInviteesFragment mainActivityAllInviteesFragment;
-    MainActivityAllInviteesPresenter mainActivityAllInviteesPresenter;
+    AllInviteesFragment allInviteesFragment;
+    AllInviteesPresenter allInviteesPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +44,21 @@ public class MainActivity extends AppCompatActivity {
         gmailContactFactory = new GmailContactFactory(this);
         phoneContactsFactory = new PhoneContactsFactory(this);
 
-        mainActivitySelectionFragment = (MainActivitySelectionFragment) getSupportFragmentManager().findFragmentByTag(SELECTION_FRAGMENT_TAG);
-        if (mainActivitySelectionFragment == null) {
-            mainActivitySelectionFragment = MainActivitySelectionFragment.getInstance();
+        selectionFragment = (SelectionFragment) getSupportFragmentManager().findFragmentByTag(SELECTION_FRAGMENT_TAG);
+        if (selectionFragment == null) {
+            selectionFragment = SelectionFragment.getInstance();
         }
-        mainActivitySelectionPresenter = new MainActivitySelectionPresenter(
-                mainActivitySelectionFragment,
+        selectionPresenter = new SelectionPresenter(
+                selectionFragment,
                 gmailContactFactory,
                 phoneContactsFactory);
 
-        mainActivityAllInviteesFragment = (MainActivityAllInviteesFragment) getSupportFragmentManager().findFragmentByTag(ALL_INVITEES_FRAGMENT_TAG);
-        if (mainActivityAllInviteesFragment == null) {
-            mainActivityAllInviteesFragment = MainActivityAllInviteesFragment.getInstance();
+        allInviteesFragment = (AllInviteesFragment) getSupportFragmentManager().findFragmentByTag(ALL_INVITEES_FRAGMENT_TAG);
+        if (allInviteesFragment == null) {
+            allInviteesFragment = AllInviteesFragment.getInstance();
         }
-        mainActivityAllInviteesPresenter = new MainActivityAllInviteesPresenter(
-                mainActivityAllInviteesFragment,
+        allInviteesPresenter = new AllInviteesPresenter(
+                allInviteesFragment,
                 gmailContactFactory,
                 phoneContactsFactory);
 
@@ -101,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
     public void startGmailContactsActivity() {
         Bundle args = new Bundle();
         args.putString("type", "gmail");
-        mainActivitySelectionFragment.setArguments(args);
+        selectionFragment.setArguments(args);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frag_container, mainActivitySelectionFragment, SELECTION_FRAGMENT_TAG)
+                .add(R.id.frag_container, selectionFragment, SELECTION_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
@@ -112,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
     public void startPhoneContactsActivity() {
         Bundle args = new Bundle();
         args.putString("type", "phone");
-        mainActivitySelectionFragment.setArguments(args);
+        selectionFragment.setArguments(args);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frag_container, mainActivitySelectionFragment, SELECTION_FRAGMENT_TAG)
+                .add(R.id.frag_container, selectionFragment, SELECTION_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     public void startAllGuestsActivity() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frag_container, mainActivityAllInviteesFragment, ALL_INVITEES_FRAGMENT_TAG)
+                .add(R.id.frag_container, allInviteesFragment, ALL_INVITEES_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
